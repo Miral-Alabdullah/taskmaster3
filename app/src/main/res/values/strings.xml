@@ -9,4 +9,8 @@
     <string name="placeholder">placeholder</string>
     <string name="all_tasks">all tasks</string>
     <string name="my_tasks">My Tasks</string>
+    <string name="problem_solving">Problem Solving</string>
+    <string name="critical_thinking">Critical Thinking</string>
+    <string name="time_management">Time Management</string>
+    <string name="settings">Settings</string>
 </resources>

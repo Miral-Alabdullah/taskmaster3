@@ -10,14 +10,10 @@ The following screenshotss clarifies the layout of those activities and take it 
 
 <br>
 
-![mytasks](./Screenshots/addtask.jpg)
 
+![Lab-1](./Screenshots/lab-1-taskMaster.png)
 
-![addtask](./Screenshots/mytasks.jpg)
-
-
-![alltasks](./Screenshots/alltasks.jpg)
-
+<br>
 
 ## How to usse the application? 
 
@@ -35,3 +31,11 @@ The following screenshotss clarifies the layout of those activities and take it 
 	
 	2- You can go back to the home page by clicking on the back button on top left.
 
+<br>
+
+
+# Lab - 2 30/8/2021
+
+<br>
+
+![Lab-1](./Screenshots/lab-2-taskMaster.png)
