@@ -32,7 +32,9 @@ public class TaskDetailPage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        String getTheTitle = intent.getExtras().getString("titlePass");
-        title.setText(getTheTitle);
+//        String getTheTitle = intent.getExtras().getString("titlePass");
+        String getTheTitleFromTheRecyclerVie = intent.getExtras().getString("taskTitle");
+        title.setText(getTheTitleFromTheRecyclerVie);
+//        title.setText(getTheTitle);
     }
 }

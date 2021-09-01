@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     TextView userNameText;
     RecyclerView taskRecyclerView;
+//    TaskAdapter.RecyclerViewOnClickListener listener;
+    ArrayList<Task> tasks = new ArrayList<>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,15 +44,17 @@ public class MainActivity extends AppCompatActivity {
         timeManagement = findViewById(R.id.timeBtn);
         userNameText = findViewById(R.id.userNameHome);
 
-        ArrayList<Task> tasks = new ArrayList<>();
+
         tasks.add(new Task("Merge Sort", "Complete The Blog", "In Progress"));
         tasks.add(new Task("Insertion Sort", "Add A Small Description For Each Step", "In Progress"));
         tasks.add(new Task("Formatting", "Bring Your Laptop Back To Life", "New"));
         tasks.add(new Task("RecyclerView", "Finish The Lab Requirements", "Completed"));
 
+
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setAdapter(new TaskAdapter(tasks));
+//        setOnClickListener();
     }
 
     @Override
@@ -105,4 +110,14 @@ public class MainActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userNameText", "");
         userNameText.setText(userName);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+//    private void setOnClickListener(){
+//        listener = (view, position) -> {
+//            Intent intent = new Intent(getApplicationContext(), SingleTask.class);
+//            intent.putExtra("task", tasks.get(position).title);
+//            startActivity(intent);
+//        };
+//    }
 }
