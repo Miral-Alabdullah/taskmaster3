@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textView2" type="id" />
+    <item name="editTextTaskTitle" type="id" />
+    <item name="editTextTaskDescription" type="id" />
+    <item name="addATaskBtn" type="id" />
+    <item name="totalTasks" type="id" />
+</resources>
