@@ -1,7 +1,6 @@
 package com.example.taskmasterver2;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             timeManagement;
 
     TextView userNameText;
+    RecyclerView taskRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
         criticalThinking = findViewById(R.id.criticalBtn);
         timeManagement = findViewById(R.id.timeBtn);
         userNameText = findViewById(R.id.userNameHome);
+
+        ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("Merge Sort", "Complete The Blog", "In Progress"));
+        tasks.add(new Task("Insertion Sort", "Add A Small Description For Each Step", "In Progress"));
+        tasks.add(new Task("Formatting", "Bring Your Laptop Back To Life", "New"));
+        tasks.add(new Task("RecyclerView", "Finish The Lab Requirements", "Completed"));
+
+        taskRecyclerView = findViewById(R.id.tasksRecyclerView);
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        taskRecyclerView.setAdapter(new TaskAdapter(tasks));
     }
 
     @Override
@@ -78,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
             goToTaskDetailPage.putExtra("titlePass", title);
             startActivity(goToTaskDetailPage);
         });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
 
     }
 
