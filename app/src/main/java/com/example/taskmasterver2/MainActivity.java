@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameText;
     RecyclerView taskRecyclerView;
 //    TaskAdapter.RecyclerViewOnClickListener listener;
-    ArrayList<Task> tasks = new ArrayList<>();
+    List<Task> tasks = new ArrayList<>();
 
 
     @Override
@@ -45,12 +46,13 @@ public class MainActivity extends AppCompatActivity {
         userNameText = findViewById(R.id.userNameHome);
 
 
-        tasks.add(new Task("Merge Sort", "Complete The Blog", "In Progress"));
-        tasks.add(new Task("Insertion Sort", "Add A Small Description For Each Step", "In Progress"));
-        tasks.add(new Task("Formatting", "Bring Your Laptop Back To Life", "New"));
-        tasks.add(new Task("RecyclerView", "Finish The Lab Requirements", "Completed"));
+//        tasks.add(new Task("Merge Sort", "Complete The Blog", "In Progress"));
+//        tasks.add(new Task("Insertion Sort", "Add A Small Description For Each Step", "In Progress"));
+//        tasks.add(new Task("Formatting", "Bring Your Laptop Back To Life", "New"));
+//        tasks.add(new Task("RecyclerView", "Finish The Lab Requirements", "Completed"));
 
-
+        AppDatabase appDatabase = AppDatabase.getTheInstance(this.getApplicationContext());
+        tasks = appDatabase.taskDao().getAllTasks();
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setAdapter(new TaskAdapter(tasks));

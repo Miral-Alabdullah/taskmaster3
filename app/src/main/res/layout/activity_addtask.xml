@@ -123,4 +123,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.046" />
 
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="210dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="468dp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="@string/task_state0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTaskState"
+        android:layout_width="210dp"
+        android:layout_height="31dp"
+        android:ems="10"
+        android:hint="@string/task_state0"
+        android:inputType="textPersonName"
+        android:autofillHints=""
+        android:shadowColor="#000000"
+        android:textColorHint="#B1B1B1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.056" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

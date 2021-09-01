@@ -11,7 +11,7 @@
         android:id="@+id/textView3"
         android:layout_width="161dp"
         android:layout_height="61dp"
-        android:text="@string/add_task"
+        android:text="All Tasks"
         android:textSize="38sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
