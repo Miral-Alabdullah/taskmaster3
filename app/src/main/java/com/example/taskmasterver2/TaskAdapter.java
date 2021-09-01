@@ -1,5 +1,6 @@
 package com.example.taskmasterver2;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,34 +9,37 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
 
-    RecyclerViewOnClickListener listener;
     List<Task> tasks;
+//    private static RecyclerViewOnClickListener listener;
 
     public TaskAdapter (List<Task> tasks){
         this.tasks = tasks;
-        this.listener = listener;
     }
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class TaskViewHolder extends RecyclerView.ViewHolder{
         public Task task;
         View itemView;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
-            itemView.setOnClickListener(this);
+            itemView.findViewById(R.id.layoutFrgmanet).setOnClickListener(view -> {
+                Intent goToDetailPage = new Intent(view.getContext(), TaskDetailPage.class);
+                goToDetailPage.putExtra("taskTitle", task.title);
+                view.getContext().startActivity(goToDetailPage);
+            });
+//            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
+//
+//        @Override
+//        public void onClick(View view) {
 //            listener.onClick(view, getAdapterPosition());
-        }
+//        }
     }
 
     @NonNull
@@ -62,10 +66,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public int getItemCount() {
         return tasks.size();
     }
-
-    public interface RecyclerViewOnClickListener{
-        void onClick(View view, int position);
-    }
+//
+//    public interface RecyclerViewOnClickListener{
+//        void onClick(View view, int position);
+//    }
 
 }
 

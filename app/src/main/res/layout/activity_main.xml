@@ -70,10 +70,10 @@
 
     <Button
         android:id="@+id/timeBtn"
-        android:layout_width="130dp"
-        android:layout_height="64dp"
+        android:layout_width="115dp"
+        android:layout_height="55dp"
         android:text="@string/time_management"
-        android:textSize="12sp"
+        android:textSize="9.75sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.283"
@@ -110,13 +110,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerView"
-        android:layout_width="412dp"
-        android:layout_height="732dp"
+        android:layout_width="283dp"
+        android:layout_height="263dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.379" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
