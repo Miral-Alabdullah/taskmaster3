@@ -51,11 +51,7 @@ public class MainActivity extends AppCompatActivity {
 //        tasks.add(new Task("Formatting", "Bring Your Laptop Back To Life", "New"));
 //        tasks.add(new Task("RecyclerView", "Finish The Lab Requirements", "Completed"));
 
-        AppDatabase appDatabase = AppDatabase.getTheInstance(this.getApplicationContext());
-        tasks = appDatabase.taskDao().getAllTasks();
-        taskRecyclerView = findViewById(R.id.tasksRecyclerView);
-        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskRecyclerView.setAdapter(new TaskAdapter(tasks));
+
 //        setOnClickListener();
     }
 
@@ -111,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userNameText", "");
         userNameText.setText(userName);
+
+        AppDatabase appDatabase = AppDatabase.getTheInstance(this.getApplicationContext());
+        tasks = appDatabase.taskDao().getAllTasks();
+        taskRecyclerView = findViewById(R.id.tasksRecyclerView);
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        taskRecyclerView.setAdapter(new TaskAdapter(tasks));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
