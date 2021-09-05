@@ -46,9 +46,45 @@ The following screenshotss clarifies the layout of those activities and take it 
 
 ![Lab-3](./Screenshots/lab-3-taskMaster.jpg)
 
+<br>
 
-# Lab - 4 31/8/2021
+# Lab - 4 1/9/2021
 
 <br>
 
+- This Lab is about creating a database to save the data that the user enterd in records. 
+
+- It's a local database, which means that the user can accsess only locally.
+
+- In order to create this database, there is a library that called Room which can be added to the dependencies as following : 
+
+<br>
+
+![room](./Screenshots/room.PNG)
+
+
+<br>
+
+- What is the Room? 
+
+  - "The Room persistence library acts as a layer that abstracts raw SQLite and lets you make use of robust database access while keep you close to SQLite so it doesn't get in the way when you want to access low level features of SQLite." [[Resource](https://www.techiediaries.com/android-room-tutorial/)]
+
+<br>
+
+The following Image shows the database that called Tasks, it has one entity called Task that contains three fields (Columns) : 
+  
+  - Id (Generated automatically from the Room itself).
+
+  - Title 
+
+  - Body
+
+  - State
+
 ![Lab-3](./Screenshots/DB.PNG)
+
+<br>
+
+# Lab - 5 5/9/2021
+
+![Lab-3](./Screenshots/Depenedencies.PNG)

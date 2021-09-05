@@ -21,7 +21,7 @@ public class SettingsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
         userNameHolder = findViewById(R.id.editTextTextPersonName);
-        save = findViewById(R.id.saveBtn);
+        save = findViewById(R.id.saveSettingsBtn);
         back = findViewById(R.id.goBackBtn3);
     }
 
@@ -33,9 +33,10 @@ public class SettingsPage extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsPage.this);
             SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
             String userNameText = userNameHolder.getText().toString();
-
             sharedPreferencesEditor.putString("userNameText", userNameText);
             sharedPreferencesEditor.apply();
+            Intent goToHomePage = new Intent(SettingsPage.this, MainActivity.class);
+            startActivity(goToHomePage);
         });
 
         back.setOnClickListener(view->{
