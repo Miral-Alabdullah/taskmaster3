@@ -88,3 +88,16 @@ The following Image shows the database that called Tasks, it has one entity call
 # Lab - 5 5/9/2021
 
 ![Lab-3](./Screenshots/Depenedencies.PNG)
+
+
+This lab is about Testing the application.The Espresso Testing was used in order to deal with testing, The prevoius imapge shows the dependencies that must be added to the build.gradle file. 
+
+The tests that were used in the code : 
+
+ - One is for testing a static text. 
+
+ - One for testing the clickable items in the RecyclerView.
+
+ - Testing the input fields. 
+
+ - Testing the displaying of the username on the Main Activity. 
