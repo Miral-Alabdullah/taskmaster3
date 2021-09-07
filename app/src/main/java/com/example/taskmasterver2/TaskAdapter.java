@@ -9,19 +9,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.TaskGenerated;
+
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
 
-    List<Task> tasks;
+    List<TaskGenerated> tasks;
 //    private static RecyclerViewOnClickListener listener;
 
-    public TaskAdapter (List<Task> tasks){
+    public TaskAdapter (List<TaskGenerated> tasks){
         this.tasks = tasks;
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
-        public Task task;
+        public TaskGenerated task;
         View itemView;
 
         public TaskViewHolder(@NonNull View itemView) {
@@ -29,7 +31,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             this.itemView = itemView;
             itemView.findViewById(R.id.layoutFrgmanet).setOnClickListener(view -> {
                 Intent goToDetailPage = new Intent(view.getContext(), TaskDetailPage.class);
-                goToDetailPage.putExtra("taskTitle", task.title);
+                goToDetailPage.putExtra("taskTitle", task.getTitle());
                 view.getContext().startActivity(goToDetailPage);
             });
 //            itemView.setOnClickListener(this);
@@ -57,9 +59,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView taskBody = holder.itemView.findViewById(R.id.taskBody);
         TextView taskState = holder.itemView.findViewById(R.id.taskState);
 
-        taskTitle.setText(holder.task.title);
-        taskBody.setText(holder.task.body);
-        taskState.setText(holder.task.state);
+        taskTitle.setText(holder.task.getTitle());
+        taskBody.setText(holder.task.getBody());
+        taskState.setText(holder.task.getState());
     }
 
     @Override

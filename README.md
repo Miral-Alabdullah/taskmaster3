@@ -81,13 +81,13 @@ The following Image shows the database that called Tasks, it has one entity call
 
   - State
 
-![Lab-3](./Screenshots/DB.PNG)
+![Lab-4](./Screenshots/DB.PNG)
 
 <br>
 
 # Lab - 5 5/9/2021
 
-![Lab-3](./Screenshots/Depenedencies.PNG)
+![Lab-5](./Screenshots/Depenedencies.PNG)
 
 
 This lab is about Testing the application.The Espresso Testing was used in order to deal with testing, The prevoius imapge shows the dependencies that must be added to the build.gradle file. 
@@ -101,3 +101,17 @@ The tests that were used in the code :
  - Testing the input fields. 
 
  - Testing the displaying of the username on the Main Activity. 
+
+ <br>
+
+# Lab - 6 7/9/2021
+
+![Lab-6](./Screenshots/AWSAppSync.PNG)
+
+![Lab-6](./Screenshots/fetchTheData.PNG)
+
+
+- For this lab, we replaced the database server from using the ROOM Library to the AWS Amplify. 
+
+- The same functionality is still working on, the only difference is that saving the data is now on the cloud instead of locally.
+

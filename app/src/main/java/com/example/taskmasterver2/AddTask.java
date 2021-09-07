@@ -3,11 +3,16 @@ package com.example.taskmasterver2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.TaskGenerated;
 
 public class AddTask extends AppCompatActivity {
 
@@ -47,6 +52,17 @@ public class AddTask extends AppCompatActivity {
         task.state = state;
         appDatabase.taskDao().insertTask(task);
 
+        TaskGenerated todo = TaskGenerated.builder()
+                .title(task.title)
+                .body(task.body)
+                .state(task.state)
+                .build();
+
+        Amplify.API.mutate(
+                ModelMutation.create(todo),
+                response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
         finish();
     }
 
