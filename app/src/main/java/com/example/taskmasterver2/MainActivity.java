@@ -4,6 +4,8 @@ package com.example.taskmasterver2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
@@ -16,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
-import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.TaskGenerated;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameText;
     RecyclerView taskRecyclerView;
 //    TaskAdapter.RecyclerViewOnClickListener listener;
-    List<Task> tasks = new ArrayList<>();
+//    List<Task> tasks = new ArrayList<>();
 
 
     @Override
@@ -120,15 +122,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ArrayList<TaskGenerated> fetchTasks = new ArrayList<>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userNameText", "");
         userNameText.setText(userName);
 
-        AppDatabase appDatabase = AppDatabase.getTheInstance(this.getApplicationContext());
-        tasks = appDatabase.taskDao().getAllTasks();
+//        AppDatabase appDatabase = AppDatabase.getTheInstance(this.getApplicationContext());
+//        tasks = appDatabase.taskDao().getAllTasks();
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskRecyclerView.setAdapter(new TaskAdapter(tasks));
+        taskRecyclerView.setAdapter(new TaskAdapter(fetchTasks));
+
+        Handler handler = new Handler(Looper.myLooper(), message -> {
+            taskRecyclerView.getAdapter().notifyDataSetChanged();
+            return false;
+        });
+
+        Amplify.API.query(
+                ModelQuery.list(TaskGenerated.class),
+                response -> {
+                    for (TaskGenerated taskGenerated : response.getData()) {
+                        Log.i("MyAmplifyApp", taskGenerated.getTitle());
+                        Log.i("MyAmplifyApp", taskGenerated.getBody());
+                        Log.i("MyAmplifyApp", taskGenerated.getState());
+                        fetchTasks.add(taskGenerated);
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
