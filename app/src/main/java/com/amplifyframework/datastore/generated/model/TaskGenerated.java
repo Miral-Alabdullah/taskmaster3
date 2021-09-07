@@ -16,28 +16,34 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the Todo type in your schema. */
+/** This is an auto generated class representing the TaskGenerated type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Todos")
-public final class Todo implements Model {
-  public static final QueryField ID = field("Todo", "id");
-  public static final QueryField NAME = field("Todo", "name");
-  public static final QueryField DESCRIPTION = field("Todo", "description");
+@ModelConfig(pluralName = "TaskGenerateds")
+public final class TaskGenerated implements Model {
+  public static final QueryField ID = field("TaskGenerated", "id");
+  public static final QueryField TITLE = field("TaskGenerated", "title");
+  public static final QueryField BODY = field("TaskGenerated", "body");
+  public static final QueryField STATE = field("TaskGenerated", "state");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String name;
-  private final @ModelField(targetType="String") String description;
+  private final @ModelField(targetType="String", isRequired = true) String title;
+  private final @ModelField(targetType="String") String body;
+  private final @ModelField(targetType="String") String state;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
   
-  public String getName() {
-      return name;
+  public String getTitle() {
+      return title;
   }
   
-  public String getDescription() {
-      return description;
+  public String getBody() {
+      return body;
+  }
+  
+  public String getState() {
+      return state;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -48,10 +54,11 @@ public final class Todo implements Model {
       return updatedAt;
   }
   
-  private Todo(String id, String name, String description) {
+  private TaskGenerated(String id, String title, String body, String state) {
     this.id = id;
-    this.name = name;
-    this.description = description;
+    this.title = title;
+    this.body = body;
+    this.state = state;
   }
   
   @Override
@@ -61,12 +68,13 @@ public final class Todo implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      Todo todo = (Todo) obj;
-      return ObjectsCompat.equals(getId(), todo.getId()) &&
-              ObjectsCompat.equals(getName(), todo.getName()) &&
-              ObjectsCompat.equals(getDescription(), todo.getDescription()) &&
-              ObjectsCompat.equals(getCreatedAt(), todo.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), todo.getUpdatedAt());
+      TaskGenerated taskGenerated = (TaskGenerated) obj;
+      return ObjectsCompat.equals(getId(), taskGenerated.getId()) &&
+              ObjectsCompat.equals(getTitle(), taskGenerated.getTitle()) &&
+              ObjectsCompat.equals(getBody(), taskGenerated.getBody()) &&
+              ObjectsCompat.equals(getState(), taskGenerated.getState()) &&
+              ObjectsCompat.equals(getCreatedAt(), taskGenerated.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), taskGenerated.getUpdatedAt());
       }
   }
   
@@ -74,8 +82,9 @@ public final class Todo implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getName())
-      .append(getDescription())
+      .append(getTitle())
+      .append(getBody())
+      .append(getState())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -85,17 +94,18 @@ public final class Todo implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("Todo {")
+      .append("TaskGenerated {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("description=" + String.valueOf(getDescription()) + ", ")
+      .append("title=" + String.valueOf(getTitle()) + ", ")
+      .append("body=" + String.valueOf(getBody()) + ", ")
+      .append("state=" + String.valueOf(getState()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }
   
-  public static NameStep builder() {
+  public static TitleStep builder() {
       return new Builder();
   }
   
@@ -108,7 +118,7 @@ public final class Todo implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static Todo justId(String id) {
+  public static TaskGenerated justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -118,8 +128,9 @@ public final class Todo implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new Todo(
+    return new TaskGenerated(
       id,
+      null,
       null,
       null
     );
@@ -127,45 +138,55 @@ public final class Todo implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      description);
+      title,
+      body,
+      state);
   }
-  public interface NameStep {
-    BuildStep name(String name);
+  public interface TitleStep {
+    BuildStep title(String title);
   }
   
 
   public interface BuildStep {
-    Todo build();
+    TaskGenerated build();
     BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep description(String description);
+    BuildStep body(String body);
+    BuildStep state(String state);
   }
   
 
-  public static class Builder implements NameStep, BuildStep {
+  public static class Builder implements TitleStep, BuildStep {
     private String id;
-    private String name;
-    private String description;
+    private String title;
+    private String body;
+    private String state;
     @Override
-     public Todo build() {
+     public TaskGenerated build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new Todo(
+        return new TaskGenerated(
           id,
-          name,
-          description);
+          title,
+          body,
+          state);
     }
     
     @Override
-     public BuildStep name(String name) {
-        Objects.requireNonNull(name);
-        this.name = name;
+     public BuildStep title(String title) {
+        Objects.requireNonNull(title);
+        this.title = title;
         return this;
     }
     
     @Override
-     public BuildStep description(String description) {
-        this.description = description;
+     public BuildStep body(String body) {
+        this.body = body;
+        return this;
+    }
+    
+    @Override
+     public BuildStep state(String state) {
+        this.state = state;
         return this;
     }
     
@@ -181,20 +202,26 @@ public final class Todo implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String description) {
+    private CopyOfBuilder(String id, String title, String body, String state) {
       super.id(id);
-      super.name(name)
-        .description(description);
+      super.title(title)
+        .body(body)
+        .state(state);
     }
     
     @Override
-     public CopyOfBuilder name(String name) {
-      return (CopyOfBuilder) super.name(name);
+     public CopyOfBuilder title(String title) {
+      return (CopyOfBuilder) super.title(title);
     }
     
     @Override
-     public CopyOfBuilder description(String description) {
-      return (CopyOfBuilder) super.description(description);
+     public CopyOfBuilder body(String body) {
+      return (CopyOfBuilder) super.body(body);
+    }
+    
+    @Override
+     public CopyOfBuilder state(String state) {
+      return (CopyOfBuilder) super.state(state);
     }
   }
   

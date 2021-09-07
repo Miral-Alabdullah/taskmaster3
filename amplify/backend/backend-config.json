@@ -8,8 +8,8 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 150,
-              "description": "taskmasterapplication"
+              "apiKeyExpirationDays": 250,
+              "description": "api key for the taskmaster"
             }
           },
           "additionalAuthenticationProviders": []
