@@ -1,5 +1,6 @@
 package com.example.taskmasterver2;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,23 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.TaskGenerated;
 
-public class AddTask extends AppCompatActivity {
+public class AddTheTask extends AppCompatActivity {
 
-    Button goBack;
     Button submit;
     EditText title, description, state;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addtask);
-        goBack = findViewById(R.id.goBackBtn);
+        setContentView(R.layout.activity_add_the_task);
         submit = findViewById(R.id.addATaskBtn);
         title = findViewById(R.id.editTextTaskTitle);
         description = findViewById(R.id.editTextTaskDescription);
@@ -37,10 +34,8 @@ public class AddTask extends AppCompatActivity {
         submit.setOnClickListener(view -> {
             Toast.makeText(this, "Submitted", Toast.LENGTH_SHORT).show();
             saveTheData(title.getText().toString(), description.getText().toString(),
-                         state.getText().toString());
-        });
-        goBack.setOnClickListener(view -> {
-            Intent returnBackIntent = new Intent(AddTask.this, MainActivity.class);
+                    state.getText().toString());
+            Intent returnBackIntent = new Intent(AddTheTask.this, MainActivity.class);
             startActivity(returnBackIntent);
         });
     }
@@ -51,7 +46,6 @@ public class AddTask extends AppCompatActivity {
         task.body = description;
         task.state = state;
         appDatabase.taskDao().insertTask(task);
-
         TaskGenerated todo = TaskGenerated.builder()
                 .title(task.title)
                 .body(task.body)
@@ -66,7 +60,4 @@ public class AddTask extends AppCompatActivity {
         finish();
     }
 
-
-
 }
-

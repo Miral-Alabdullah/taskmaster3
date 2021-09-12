@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Toast.makeText(getApplicationContext(), "onStart()", Toast.LENGTH_SHORT).show();
         toAddTask.setOnClickListener(view -> {
-            Intent firstIntent = new Intent(MainActivity.this, AddTask.class);
+            Intent firstIntent = new Intent(MainActivity.this, AddTheTask.class);
             startActivity(firstIntent);
             Toast.makeText(MainActivity.this, "This button was clicked", Toast.LENGTH_SHORT).show();
         });

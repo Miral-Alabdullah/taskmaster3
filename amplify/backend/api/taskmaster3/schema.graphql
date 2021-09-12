@@ -3,4 +3,11 @@ type TaskGenerated @model {
   title: String!
   body: String
   state: String
+  Team: team @connection(name: "task")
+}
+
+type Team @model {
+  if: ID!
+  name: String!
+  task: [Task] @connection(name: "task")
 }
