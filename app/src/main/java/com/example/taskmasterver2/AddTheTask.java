@@ -15,7 +15,7 @@ import com.amplifyframework.datastore.generated.model.TaskGenerated;
 
 public class AddTheTask extends AppCompatActivity {
 
-    Button submit;
+    Button submit, back;
     EditText title, description, state;
 
     @Override
@@ -26,6 +26,7 @@ public class AddTheTask extends AppCompatActivity {
         title = findViewById(R.id.editTextTaskTitle);
         description = findViewById(R.id.editTextTaskDescription);
         state = findViewById(R.id.editTextTaskState);
+        back = findViewById(R.id.goBack);
     }
 
     @Override
@@ -38,18 +39,24 @@ public class AddTheTask extends AppCompatActivity {
             Intent returnBackIntent = new Intent(AddTheTask.this, MainActivity.class);
             startActivity(returnBackIntent);
         });
+
+        back.setOnClickListener(view -> {
+            Intent returnBackIntent = new Intent(AddTheTask.this, MainActivity.class);
+            startActivity(returnBackIntent);
+        });
     }
+
     private void saveTheData(String title, String description, String state){
-        AppDatabase appDatabase =  AppDatabase.getTheInstance(this.getApplicationContext());
-        Task task = new Task();
-        task.title = title;
-        task.body = description;
-        task.state = state;
-        appDatabase.taskDao().insertTask(task);
+//        AppDatabase appDatabase =  AppDatabase.getTheInstance(this.getApplicationContext());
+//        Task task = new Task();
+//        task.title = title;
+//        task.body = description;
+//        task.state = state;
+//        appDatabase.taskDao().insertTask(task);
         TaskGenerated todo = TaskGenerated.builder()
-                .title(task.title)
-                .body(task.body)
-                .state(task.state)
+                .title(title)
+                .body(description)
+                .state(state)
                 .build();
 
         Amplify.API.mutate(
