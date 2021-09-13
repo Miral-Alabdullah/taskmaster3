@@ -10,6 +10,11 @@
       "StackName": "amplify-taskmaster3-taskapp-202251",
       "StackId": "arn:aws:cloudformation:us-east-1:048138947410:stack/amplify-taskmaster3-taskapp-202251/440efc80-1000-11ec-be70-0e6b90c5010d",
       "AmplifyAppId": "d1zqa3qnbgpi5s"
+    },
+    "categories": {
+      "auth": {
+        "taskmaster3fee45ca3": {}
+      }
     }
   }
 }
