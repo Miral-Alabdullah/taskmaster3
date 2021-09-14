@@ -67,7 +67,7 @@ public class AddTheTask extends AppCompatActivity {
 //        task.body = description;
 //        task.state = state;
 //        appDatabase.taskDao().insertTask(task);
-        
+
         TaskGenerated todo = TaskGenerated.builder()
                 .title(title)
                 .body(description)

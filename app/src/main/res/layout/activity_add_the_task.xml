@@ -136,7 +136,7 @@
             tools:layout_editor_absoluteY="353dp" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
+            android:id="@+id/radioGroupForTeams"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="29dp"
