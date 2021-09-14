@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskmasterVer2">
         <activity android:name=".AddTheTask"/>
+        <activity
+            android:name="com.amplifyframework.auth.cognito.activities.HostedUIRedirectActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="myapp" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SingleTask" />
         <activity android:name=".SettingsPage" />
         <activity android:name=".TaskDetailPage" />

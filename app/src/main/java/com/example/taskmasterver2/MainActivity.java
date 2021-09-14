@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
             settings,
             problemSolving,
             criticalThinking,
-            timeManagement;
+            timeManagement,
+            signOut;
 
     TextView userNameText;
     RecyclerView taskRecyclerView;
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
         criticalThinking = findViewById(R.id.criticalBtn);
         timeManagement = findViewById(R.id.timeBtn);
         userNameText = findViewById(R.id.userNameHome);
-
+        signOut = findViewById(R.id.siginingOut);
 
 
 
         try {
             Amplify.addPlugin(new AWSApiPlugin());
-//            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -77,34 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        setOnClickListener();
-//signup
-//        AuthSignUpOptions options = AuthSignUpOptions.builder()
-//                .userAttribute(AuthUserAttributeKey.email(), "miral.alabdallah@gmail.com")
-//                .build();
-//        Amplify.Auth.signUp("mirAl123", "123456789", options,
-//                result -> Log.i("AuthQuickStart", "Result: " + result.toString()),
-//                error -> Log.e("AuthQuickStart", "Sign up failed", error)
-//        );
-//confirmation
-//        Amplify.Auth.confirmSignUp(
-//                "mirAl123",
-//                "220990",
-//                result -> Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
-        // SignIn
-//        Amplify.Auth.signIn(
-//                "mirAl123",
-//                "123456789",
-//                result -> Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
 
-        //SignOut
-//        Amplify.Auth.signOut(
-//                () -> Log.i("AuthQuickstart", "Signed out successfully"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
+        Amplify.Auth.signInWithWebUI(
+                this,
+                result -> Log.i("AuthQuickStart", result.toString()),
+                error -> Log.e("AuthQuickStart", error.toString())
+        );
+
     }
 
     @Override
@@ -148,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToTaskDetailPage);
         });
 
+        signOut.setOnClickListener(view -> {
+            Amplify.Auth.signOut(
+                    () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                    error -> Log.e("AuthQuickstart", error.toString())
+            );
+        });
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
