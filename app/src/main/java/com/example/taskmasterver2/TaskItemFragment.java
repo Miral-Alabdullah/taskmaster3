@@ -26,6 +26,7 @@ public class TaskItemFragment extends Fragment {
     private String mBody;
     private String mState;
 
+
     public TaskItemFragment() {
         // Required empty public constructor
     }

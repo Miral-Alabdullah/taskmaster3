@@ -7,16 +7,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.TaskGenerated;
+import com.amplifyframework.datastore.generated.model.Team;
 
 public class AddTheTask extends AppCompatActivity {
 
     Button submit, back;
     EditText title, description, state;
+    RadioButton teamFreeWill, ackreman, unagi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,17 @@ public class AddTheTask extends AppCompatActivity {
         description = findViewById(R.id.editTextTaskDescription);
         state = findViewById(R.id.editTextTaskState);
         back = findViewById(R.id.goBack);
+
+        teamFreeWill = findViewById(R.id.radioTeamFreeWill);
+        ackreman = findViewById(R.id.radioAckerman);
+        unagi = findViewById(R.id.radioUnagi);
+
+
+//        saveTeamData("TeamFreeWill");
+//        saveTeamData("Ackreman");
+//        saveTeamData("Unagi");
+
+
     }
 
     @Override
@@ -53,6 +67,7 @@ public class AddTheTask extends AppCompatActivity {
 //        task.body = description;
 //        task.state = state;
 //        appDatabase.taskDao().insertTask(task);
+        
         TaskGenerated todo = TaskGenerated.builder()
                 .title(title)
                 .body(description)
@@ -61,6 +76,19 @@ public class AddTheTask extends AppCompatActivity {
 
         Amplify.API.mutate(
                 ModelMutation.create(todo),
+                response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
+        finish();
+    }
+
+    private void saveTeamData(String name){
+        Team team = Team.builder()
+                .name(name)
+                .build();
+
+        Amplify.API.mutate(
+                ModelMutation.create(team),
                 response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
                 error -> Log.e("MyAmplifyApp", "Create failed", error)
         );
