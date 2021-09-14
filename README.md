@@ -115,3 +115,29 @@ The tests that were used in the code :
 
 - The same functionality is still working on, the only difference is that saving the data is now on the cloud instead of locally.
 
+# Lab - 7 14/9/2021
+
+Adding the authentication to the application using `amplify authentication`: 
+
+  - In order to do that, I used the [Sign in with web UI](https://docs.amplify.aws/lib/auth/signin_web_ui/q/platform/android/) methodology which add the activity of sining in an singning up directly from AWS. 
+
+  - The Actvity: 
+
+  ```
+  <activity
+            android:name="com.amplifyframework.auth.cognito.activities.HostedUIRedirectActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="myapp" />
+            </intent-filter>
+        </activity>
+  ```
+  
+![Lab-7](./Screenshots/signup.jpg)
+
+![Lab-7](./Screenshots/signin.jpg)
+
+![Lab-7](./Screenshots/logout.jpg)
