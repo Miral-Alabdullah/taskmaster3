@@ -40,5 +40,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "uploadingfiles": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

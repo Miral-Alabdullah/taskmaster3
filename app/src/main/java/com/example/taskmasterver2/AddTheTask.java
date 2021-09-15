@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -17,7 +18,9 @@ import com.amplifyframework.datastore.generated.model.Team;
 
 public class AddTheTask extends AppCompatActivity {
 
-    Button submit, back;
+    Button submit,
+            back,
+            uploadFile;
     EditText title, description, state;
     RadioButton teamFreeWill, ackreman, unagi;
 
@@ -30,7 +33,7 @@ public class AddTheTask extends AppCompatActivity {
         description = findViewById(R.id.editTextTaskDescription);
         state = findViewById(R.id.editTextTaskState);
         back = findViewById(R.id.goBack);
-
+        uploadFile = findViewById(R.id.uploadFileBtn);
         teamFreeWill = findViewById(R.id.radioTeamFreeWill);
         ackreman = findViewById(R.id.radioAckerman);
         unagi = findViewById(R.id.radioUnagi);
@@ -58,16 +61,20 @@ public class AddTheTask extends AppCompatActivity {
             Intent returnBackIntent = new Intent(AddTheTask.this, MainActivity.class);
             startActivity(returnBackIntent);
         });
+
+        uploadFile.setOnClickListener(this::uploadingTheFile);
     }
 
+    private void uploadingTheFile(View view) {
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("*/*");
+        chooseFile = Intent.createChooser(chooseFile, "Upload A File");
+        startActivityForResult(chooseFile, 510);
+    }
+
+
+
     private void saveTheData(String title, String description, String state){
-//        AppDatabase appDatabase =  AppDatabase.getTheInstance(this.getApplicationContext());
-//        Task task = new Task();
-//        task.title = title;
-//        task.body = description;
-//        task.state = state;
-//        appDatabase.taskDao().insertTask(task);
-        
         TaskGenerated todo = TaskGenerated.builder()
                 .title(title)
                 .body(description)

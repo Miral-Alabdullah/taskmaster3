@@ -7,6 +7,18 @@
     android:background="#5B72E4"
     tools:context=".AddTheTask">
 
+    <Button
+        android:id="@+id/uploadFileBtn"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
+        android:text="Upload File"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.877" />
+
     <EditText
         android:id="@+id/editTextNumberTotalTasks"
         android:layout_width="98dp"
@@ -39,15 +51,15 @@
 
     <Button
         android:id="@+id/addATaskBtn"
-        android:layout_width="259dp"
-        android:layout_height="52dp"
+        android:layout_width="142dp"
+        android:layout_height="42dp"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.876" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
