@@ -48,7 +48,7 @@ public final class Team implements Model {
       return updatedAt;
   }
   
-  private Team(String id, String name) {
+  public Team(String id, String name) {
     this.id = id;
     this.name = name;
   }
