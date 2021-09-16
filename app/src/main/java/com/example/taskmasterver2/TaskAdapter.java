@@ -17,7 +17,6 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
 
     List<TaskGenerated> tasks;
-//    private static RecyclerViewOnClickListener listener;
 
     public TaskAdapter (List<TaskGenerated> tasks){
         this.tasks = tasks;
@@ -32,17 +31,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             this.itemView = itemView;
             itemView.findViewById(R.id.layoutFrgmanet).setOnClickListener(view -> {
                 Intent goToDetailPage = new Intent(view.getContext(), TaskDetailPage.class);
-                goToDetailPage.putExtra("taskTitle", task.getTitle());
+                goToDetailPage.putExtra("taskImage", task.getImage());
+                goToDetailPage.putExtra("titlePass", task.getTitle());
                 view.getContext().startActivity(goToDetailPage);
             });
-//            itemView.setOnClickListener(this);
         }
 
-//
-//        @Override
-//        public void onClick(View view) {
-//            listener.onClick(view, getAdapterPosition());
-//        }
     }
 
     @NonNull
@@ -71,10 +65,5 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public int getItemCount() {
         return tasks.size();
     }
-//
-//    public interface RecyclerViewOnClickListener{
-//        void onClick(View view, int position);
-//    }
-
 }
 

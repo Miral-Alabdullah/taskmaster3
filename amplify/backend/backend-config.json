@@ -1,44 +1,62 @@
 {
-  "api": {
-    "taskmaster3": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 250,
-              "description": "api key for the taskmaster"
+    "api": {
+        "taskmaster3": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "apiKeyExpirationDays": 250,
+                            "description": "api key for the taskmaster"
+                        }
+                    },
+                    "additionalAuthenticationProviders": []
+                }
             }
-          },
-          "additionalAuthenticationProviders": []
         }
-      }
+    },
+    "auth": {
+        "taskmaster3fee45ca3": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false,
+            "frontendAuthConfig": {
+                "loginMechanisms": [
+                    "EMAIL"
+                ],
+                "signupAttributes": [
+                    "EMAIL"
+                ],
+                "passwordProtectionSettings": {
+                    "passwordPolicyMinLength": 8,
+                    "passwordPolicyCharacters": []
+                },
+                "mfaConfiguration": "OFF",
+                "mfaTypes": [
+                    "SMS"
+                ]
+            }
+        }
+    },
+    "notifications": {
+        "taskmaster3F1vPJ": {
+            "service": "Pinpoint",
+            "channels": [
+                "FCM"
+            ]
+        }
     }
+<<<<<<< HEAD
   },
-  "auth": {
-    "taskmaster3fee45ca3": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "loginMechanisms": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ]
-      }
+  "storage": {
+    "uploadingfiles": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
     }
   }
+=======
+>>>>>>> lab-36
 }
