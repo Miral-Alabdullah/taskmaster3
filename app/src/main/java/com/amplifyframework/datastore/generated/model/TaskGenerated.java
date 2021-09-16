@@ -26,11 +26,13 @@ public final class TaskGenerated implements Model {
   public static final QueryField TITLE = field("TaskGenerated", "title");
   public static final QueryField BODY = field("TaskGenerated", "body");
   public static final QueryField STATE = field("TaskGenerated", "state");
+  public static final QueryField IMAGE = field("TaskGenerated", "image");
   public static final QueryField TEAM = field("TaskGenerated", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
+  private final @ModelField(targetType="String") String image;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -50,6 +52,10 @@ public final class TaskGenerated implements Model {
       return state;
   }
   
+  public String getImage() {
+      return image;
+  }
+  
   public Team getTeam() {
       return team;
   }
@@ -62,11 +68,12 @@ public final class TaskGenerated implements Model {
       return updatedAt;
   }
   
-  private TaskGenerated(String id, String title, String body, String state, Team team) {
+  private TaskGenerated(String id, String title, String body, String state, String image, Team team) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.state = state;
+    this.image = image;
     this.team = team;
   }
   
@@ -82,6 +89,7 @@ public final class TaskGenerated implements Model {
               ObjectsCompat.equals(getTitle(), taskGenerated.getTitle()) &&
               ObjectsCompat.equals(getBody(), taskGenerated.getBody()) &&
               ObjectsCompat.equals(getState(), taskGenerated.getState()) &&
+              ObjectsCompat.equals(getImage(), taskGenerated.getImage()) &&
               ObjectsCompat.equals(getTeam(), taskGenerated.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), taskGenerated.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), taskGenerated.getUpdatedAt());
@@ -95,6 +103,7 @@ public final class TaskGenerated implements Model {
       .append(getTitle())
       .append(getBody())
       .append(getState())
+      .append(getImage())
       .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -110,6 +119,7 @@ public final class TaskGenerated implements Model {
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
+      .append("image=" + String.valueOf(getImage()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -145,6 +155,7 @@ public final class TaskGenerated implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -154,6 +165,7 @@ public final class TaskGenerated implements Model {
       title,
       body,
       state,
+      image,
       team);
   }
   public interface TitleStep {
@@ -166,6 +178,7 @@ public final class TaskGenerated implements Model {
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep body(String body);
     BuildStep state(String state);
+    BuildStep image(String image);
     BuildStep team(Team team);
   }
   
@@ -175,6 +188,7 @@ public final class TaskGenerated implements Model {
     private String title;
     private String body;
     private String state;
+    private String image;
     private Team team;
     @Override
      public TaskGenerated build() {
@@ -185,6 +199,7 @@ public final class TaskGenerated implements Model {
           title,
           body,
           state,
+          image,
           team);
     }
     
@@ -208,6 +223,12 @@ public final class TaskGenerated implements Model {
     }
     
     @Override
+     public BuildStep image(String image) {
+        this.image = image;
+        return this;
+    }
+    
+    @Override
      public BuildStep team(Team team) {
         this.team = team;
         return this;
@@ -225,11 +246,12 @@ public final class TaskGenerated implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state, Team team) {
+    private CopyOfBuilder(String id, String title, String body, String state, String image, Team team) {
       super.id(id);
       super.title(title)
         .body(body)
         .state(state)
+        .image(image)
         .team(team);
     }
     
@@ -246,6 +268,11 @@ public final class TaskGenerated implements Model {
     @Override
      public CopyOfBuilder state(String state) {
       return (CopyOfBuilder) super.state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder image(String image) {
+      return (CopyOfBuilder) super.image(image);
     }
     
     @Override

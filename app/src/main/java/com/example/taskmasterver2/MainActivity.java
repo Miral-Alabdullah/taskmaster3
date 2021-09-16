@@ -3,10 +3,13 @@ package com.example.taskmasterver2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.TaskGenerated;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userNameText;
     RecyclerView taskRecyclerView;
     ArrayList<TaskGenerated> fetchTasks = new ArrayList<>();
+    ArrayList<Team> fetchTeams = new ArrayList<>();
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -98,17 +103,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(getApplicationContext(), "onCreate()", Toast.LENGTH_SHORT).show();
-        toAddTask = findViewById(R.id.toAddTaskBtn);
-        toAllTasks = findViewById(R.id.toSeeTheTasksBtn);
-        settings = findViewById(R.id.settingsBtn);
-        problemSolving = findViewById(R.id.solvingBtn);
-        criticalThinking = findViewById(R.id.criticalBtn);
-        timeManagement = findViewById(R.id.timeBtn);
-        userNameText = findViewById(R.id.userNameHome);
-        signOut = findViewById(R.id.siginingOut);
-        taskRecyclerView = findViewById(R.id.tasksRecyclerView);
-
-
+        initializingViews();
 
         try {
             Amplify.addPlugin(new AWSApiPlugin());
@@ -124,17 +119,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         signInWithWeb();
-        userNameText.setText(Amplify.Auth.getCurrentUser().getUsername());
-
     }
+
+
+
+    public void initializingViews(){
+        toAddTask = findViewById(R.id.toAddTaskBtn);
+        toAllTasks = findViewById(R.id.toSeeTheTasksBtn);
+        settings = findViewById(R.id.settingsBtn);
+        problemSolving = findViewById(R.id.solvingBtn);
+        criticalThinking = findViewById(R.id.criticalBtn);
+        timeManagement = findViewById(R.id.timeBtn);
+        userNameText = findViewById(R.id.userNameHome);
+        signOut = findViewById(R.id.siginingOut);
+        taskRecyclerView = findViewById(R.id.tasksRecyclerView);
+    }
+
+
 
     @Override
     public void onStart() {
         super.onStart();
         Toast.makeText(getApplicationContext(), "onStart()", Toast.LENGTH_SHORT).show();
-
+        fetchTheUserData();
+        fetchTheData(fetchTeams);
         setTaskRecyclerView(fetchTasks);
-        fetchTheData(fetchTasks);
 
 
         /* ------------------------ Buttons With Listeners ------------------------ */
@@ -146,20 +155,16 @@ public class MainActivity extends AppCompatActivity {
         timeManagement.setOnClickListener(view-> toTimeManagementListener());
 
 
-        signOut.setOnClickListener(view -> {
-            Amplify.Auth.signOut(
-                    () -> Log.i("AuthQuickstart", "Signed out successfully"),
-                    error -> Log.e("AuthQuickstart", error.toString())
-            );
-        });
-
 
     }
+
+
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-
 
     }
 
@@ -221,19 +226,6 @@ public class MainActivity extends AppCompatActivity {
                                      - Dealing With Amplify Methods -
      ************************************************************************************************/
 
-    private void addPlugins(){
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSCognitoAuthPlugin());
-            Amplify.configure(getApplicationContext());
-
-            Log.i("MyAmplifyApp", "Initialized Amplify");
-        } catch (AmplifyException error) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
-        }
-    }
-
-
     private void signInWithWeb(){
         Amplify.Auth.signInWithWebUI(
                 this,
@@ -243,24 +235,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void fetchTheData(ArrayList<TaskGenerated> fetchTasks){
+    public void fetchTheData(ArrayList<Team> fetchTeams){
         Handler handler = new Handler(Looper.myLooper(), message -> {
             taskRecyclerView.getAdapter().notifyDataSetChanged();
             return false;
         });
 
         Amplify.API.query(
-                ModelQuery.list(TaskGenerated.class),
+                ModelQuery.list(Team.class),
                 response -> {
-                    for (TaskGenerated taskGenerated : response.getData()) {
-                        Log.i("MyAmplifyApp", taskGenerated.getTitle());
-                        Log.i("MyAmplifyApp", taskGenerated.getBody());
-                        Log.i("MyAmplifyApp", taskGenerated.getState());
-                        fetchTasks.add(taskGenerated);
+                    for (Team teams : response.getData()) {
+                        Log.i("MyAmplifyApp", teams.getName());
+                        fetchTeams.add(teams);
                     }
+                    filteringTheTasks();
                     handler.sendEmptyMessage(1);
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
+    }
+
+    public void filteringTheTasks(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String teamName = sharedPreferences.getString("teamText", "");
+        for (int i=0; i<fetchTeams.size(); i++){
+            if(fetchTeams.get(i).getName().equals(teamName)){
+                fetchTasks.addAll(fetchTeams.get(i).getTasks());
+            }
+        }
+        Log.println(fetchTasks.size(),"Size","");
+    }
+
+    public void fetchTheUserData(){
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    if (result.isSignedIn())
+                    {
+                        userNameText.setText(Amplify.Auth.getCurrentUser().getUsername());
+                        signOut.setVisibility(View.VISIBLE);
+                        signOut.setOnClickListener(view -> {
+                            Amplify.Auth.signOut(
+                                    () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                                    error -> Log.e("AuthQuickstart", error.toString())
+                            );
+                        });
+                    }
+                },
+                error -> Log.e("AuthQuickStart", error.toString())
         );
     }
 

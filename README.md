@@ -115,7 +115,30 @@ The tests that were used in the code :
 
 - The same functionality is still working on, the only difference is that saving the data is now on the cloud instead of locally.
 
-# Lab - 7 14/9/2021
+# Lab - Relations 
+
+In This lab, Another entity has been created wich is **Team**, This entity should be specified each time a task will be created. 
+
+![realtions](./Screenshots/relations.jpg)
+
+This image shows the relation between the Team end the Task entities. 
+
+In order to do so, the following steps has been applied : 
+
+ 1- The schema has been updated with the new entity.
+
+ 2- The modal code has been generetaed to meet the new schema. 
+
+
+![teams](./Screenshots/upload.jpg)
+
+This image shows how it required to specify a team in order to add a new task. 
+
+<br>
+<br>
+
+
+# Lab - 7 13/9/2021
 
 Adding the authentication to the application using `amplify authentication`: 
 
@@ -141,3 +164,50 @@ Adding the authentication to the application using `amplify authentication`:
 ![Lab-7](./Screenshots/signin.jpg)
 
 ![Lab-7](./Screenshots/logout.jpg)
+
+
+<br>
+<br>
+
+# Lab - 8 14/9/2021
+
+Allow the user to upload an image from the device whenever he adds a new task, and display it on the page of tasks.
+
+In order to do so, we used the AWS S3 service which provide us with a storage to hold those uploaded files in the cloud. 
+
+Some dependecies and plugins required to accomplish the process : 
+
+```
+dependencies {
+    implementation 'com.amplifyframework:aws-storage-s3:1.24.0'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.24.0'
+}
+-------------------------------------------------------------------
+Amplify.addPlugin(new AWSCognitoAuthPlugin());
+Amplify.addPlugin(new AWSS3StoragePlugin());
+```
+
+
+![Lab-8](./Screenshots/upload.jpg)
+
+![Lab-8](./Screenshots/image.jpg)
+
+<br>
+<br>
+
+# Lab - 9 15/9/2021
+
+## Amazon Simple Notification Service
+
+- Fully managed pub/sub messaging, SMS, email, and mobile push notifications.
+
+This lab is about getting notifications from the firebase.
+
+
+**Sender :** 
+![Lab-9](./Screenshots/cloudMessaging.jpg)
+
+
+**Reciever :**
+
+![Lab-9](./Screenshots/notification.jpg)

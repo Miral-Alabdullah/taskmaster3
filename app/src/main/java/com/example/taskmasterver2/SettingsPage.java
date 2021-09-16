@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class SettingsPage extends AppCompatActivity {
 
-    EditText userNameHolder;
+    EditText teamHolder;
     Button
             save,
             back;
@@ -20,9 +20,9 @@ public class SettingsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
-        userNameHolder = findViewById(R.id.editTextTextPersonName);
+        teamHolder = findViewById(R.id.editTextTextPersonName);
         save = findViewById(R.id.saveSettingsBtn);
-        back = findViewById(R.id.goBackBtn3);
+        back = findViewById(R.id.goBackBtn);
     }
 
     @Override
@@ -32,8 +32,8 @@ public class SettingsPage extends AppCompatActivity {
             Toast.makeText(SettingsPage.this, "clicked!", Toast.LENGTH_SHORT).show();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsPage.this);
             SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-            String userNameText = userNameHolder.getText().toString();
-            sharedPreferencesEditor.putString("userNameText", userNameText);
+            String teamText = teamHolder.getText().toString();
+            sharedPreferencesEditor.putString("teamText", teamText);
             sharedPreferencesEditor.apply();
             Intent goToHomePage = new Intent(SettingsPage.this, MainActivity.class);
             startActivity(goToHomePage);

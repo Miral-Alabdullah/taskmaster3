@@ -1,18 +1,16 @@
 package com.example.taskmasterver2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
@@ -21,6 +19,8 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.TaskGenerated;
 import com.amplifyframework.datastore.generated.model.Team;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AddTheTask extends AppCompatActivity {
     Team team = null;
     String name = "name placeholder";
     List<Team> teams = new ArrayList<>();
-    RadioGroup groupOfRadios;
+    String imageName= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +49,16 @@ public class AddTheTask extends AppCompatActivity {
         teamFreeWill = findViewById(R.id.radioTeamFreeWill);
         ackreman = findViewById(R.id.radioAckerman);
         unagi = findViewById(R.id.radioUnagi);
-        groupOfRadios = findViewById(R.id.radioGroupForTeams);
         getTeamData();
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
         submit.setOnClickListener(view -> {
             Toast.makeText(this, "Submitted", Toast.LENGTH_SHORT).show();
+            onRadioButtonClicked(view);
             saveTheData(title.getText().toString(), description.getText().toString(),
                     state.getText().toString());
             System.out.println(title.getText().toString());
@@ -73,9 +74,10 @@ public class AddTheTask extends AppCompatActivity {
             Intent returnBackIntent = new Intent(AddTheTask.this, MainActivity.class);
             startActivity(returnBackIntent);
         });
-        groupOfRadios.setOnClickListener(this::onRadioButtonClicked);
         uploadFile.setOnClickListener(this::uploadingTheFile);
     }
+
+
 
     private void uploadingTheFile(View view) {
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
@@ -91,25 +93,16 @@ public class AddTheTask extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch(view.getId()) {
-            case R.id.radioTeamFreeWill:
-                if (checked)
-                    name = "TeamFreeWill";
-                System.out.println(name + "***************************");
-                    break;
-            case R.id.radioAckerman:
-                if (checked)
-                    name = "Ackreman";
-                System.out.println(name);
-                    break;
-            case R.id.radioUnagi:
-                if (checked)
-                    name = "Unagi";
-                System.out.println(name);
-                break;
+        if(teamFreeWill.isChecked()){
+            name = "TeamFreeWill";
+            System.out.println(name + "***************************");
+        } else if(ackreman.isChecked()){
+            name = "Ackreman";
+            System.out.println(name);
+        } else if(unagi.isChecked()){
+            name = "Unagi";
+            System.out.println(name);
         }
-
         for(int i = 0; i<teams.size(); i++){
             if (teams.get(i).getName().equals(name)){
                 team = teams.get(i);
@@ -118,12 +111,15 @@ public class AddTheTask extends AppCompatActivity {
 
     }
 
+
+
     private void saveTheData(String title, String description, String state){
         TaskGenerated todo = TaskGenerated.builder()
                 .title(title)
                 .body(description)
                 .state(state)
                 .team(team)
+                .image(imageName)
                 .build();
 
         Amplify.API.mutate(
@@ -146,5 +142,25 @@ public class AddTheTask extends AppCompatActivity {
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            InputStream exampleInputStream = getContentResolver().openInputStream(data.getData());
+            imageName = data.getData().toString();
+
+            Amplify.Storage.uploadInputStream(
+                    imageName,
+                    exampleInputStream,
+                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+            );
+        }  catch (FileNotFoundException error) {
+            Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+        }
     }
 }
